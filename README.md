@@ -3,7 +3,7 @@
 
 ## 执行
 ```
-java -jar web-0.0.1-SNAPSHOT.jar
+java -jar web-0.0.2-SNAPSHOT.jar
 ```
 
 ## application.yml 配置
