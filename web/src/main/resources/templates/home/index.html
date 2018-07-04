@@ -25,9 +25,14 @@
 </div>
 
 <main class="container">
+    <div class="alert alert-warning" role="alert">
+        当前节点数量：<span th:text="${nodeCount}">0</span>
+    </div>
     <div class="card mb-3" th:each="v, i:${blocks}">
         <div class="card-header">区块高度：<span th:text="${v.index}">0</span>(<span th:text="${v.timeStamp}"></span>)</div>
         <div class="card-body">
+            <div>节点：<span th:text="${v.nodeName}"></span></div>
+            <div>客户端IP：<span th:text="${v.from}">0.0.0.0</span></div>
             <div>上一区块 HASH：<span th:text="${v.preHash}">0</span></div>
             <div>当前区块 HASH：<span th:text="${v.hash}">0</span></div>
             <div>区块内容：<span th:text="${v.data}">0</span></div>

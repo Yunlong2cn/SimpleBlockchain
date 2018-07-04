@@ -5,7 +5,6 @@ import java.util.List;
 
 public class NodeUtil {
     private static List<String> nodes;
-    private static NodeUtil nodeUtil;
 
     public static List<String> get() {
         if (nodes == null) {
@@ -17,6 +16,14 @@ public class NodeUtil {
     public static boolean add(String url) {
         if (!get().contains(url)) {
             nodes.add(url);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean remove(String url) {
+        if (!get().contains(url)) {
+            nodes.remove(url);
             return true;
         }
         return false;

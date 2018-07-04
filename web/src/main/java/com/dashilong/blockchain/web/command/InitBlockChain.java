@@ -1,6 +1,7 @@
 package com.dashilong.blockchain.web.command;
 
 import cn.hutool.log.StaticLog;
+import com.dashilong.blockchain.web.config.BlockChainConfig;
 import com.dashilong.blockchain.web.helper.BlockChainUtil;
 import com.dashilong.blockchain.web.service.AsyncService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 public class InitBlockChain implements CommandLineRunner {
     @Autowired
     AsyncService asyncService;
+    @Autowired
+    BlockChainConfig blockChainConfig;
 
     @Override
     public void run(String... args) throws Exception {
@@ -21,7 +24,7 @@ public class InitBlockChain implements CommandLineRunner {
 
         if (BlockChainUtil.get().getBlocks().size() == 0) {
             StaticLog.info("初始化区块链");
-            BlockChainUtil.get().genesisBlock();
+            BlockChainUtil.get().genesisBlock(blockChainConfig.getNode());
         } else {
             StaticLog.info("已同步自其它节点的区块，无需创建创世块");
         }

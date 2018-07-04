@@ -24,9 +24,11 @@ public class BlockChain {
         }
     }
 
-    public Block createBlock(int index, String hash, String time, String data) {
+    public Block createBlock(int index, String nodeName, String from, String hash, String time, String data) {
         Block block = new Block();
         block.setIndex(index);
+        block.setNodeName(nodeName);
+        block.setFrom(from);
         block.setPreHash(hash);
         block.setTimeStamp(time);
         block.setData(data);
@@ -35,7 +37,7 @@ public class BlockChain {
     }
 
     public String hash(Block block) {
-        return DigestUtil.sha256(block.getIndex() + block.getPreHash() + block.getTimeStamp() + block.getData()).toString();
+        return DigestUtil.sha256(block.getIndex() + block.getNodeName() + block.getFrom() + block.getPreHash() + block.getTimeStamp() + block.getData()).toString();
     }
 
     public boolean valid(Block block) {
@@ -45,8 +47,8 @@ public class BlockChain {
         return true;
     }
 
-    public void genesisBlock() {
-        Block block = createBlock(0, "", DateUtil.now(), "Welcome to blockchain");
+    public void genesisBlock(String nodeName) {
+        Block block = createBlock(0, nodeName, "", "", DateUtil.now(), "Welcome to blockchain");
         addBlock(block);
     }
 

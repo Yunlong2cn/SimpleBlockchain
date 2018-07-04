@@ -8,6 +8,9 @@ import java.util.Date;
 @Data
 public class Block {
     int index;
+    String nodeName;
+
+    String from;
 
     String preHash;
     String hash;

@@ -7,6 +7,7 @@ import cn.hutool.log.StaticLog;
 import com.dashilong.blockchain.core.Block;
 import com.dashilong.blockchain.web.config.BlockChainConfig;
 import com.dashilong.blockchain.web.helper.BlockChainUtil;
+import com.dashilong.blockchain.web.helper.NodeUtil;
 import com.dashilong.blockchain.web.service.AsyncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,20 @@ public class AsyncServiceImpl implements AsyncService {
 
             // 找出拥有最长链的节点
             for (int i = 0; i < jsonArray.size(); i++) {
-                String data = HttpUtil.get( "http://"+ jsonArray.getStr(i) + "/read");
-                JSONArray jArray = JSONUtil.parseArray(data);
-                if (jArray.size() > blockLen) {
-                    blockLen = jArray.size();
-                    node = jsonArray.getStr(i);
+                String tmpNode = jsonArray.getStr(i);
+                try {
+                    String data = HttpUtil.get( "http://"+ tmpNode + "/read");
+                    JSONArray jArray = JSONUtil.parseArray(data);
+                    if (jArray.size() > blockLen) {
+                        blockLen = jArray.size();
+                        node = tmpNode;
+                    }
+                    NodeUtil.add(tmpNode);
+                } catch (Exception e) {
+                    StaticLog.info("节点故障，无法正常访问，请修复");
+                    NodeUtil.remove(tmpNode);
                 }
+
             }
 
             if (!node.isEmpty()) {
@@ -52,7 +61,7 @@ public class AsyncServiceImpl implements AsyncService {
                 }
             }
         } catch (Exception e) {
-            StaticLog.info("同步节点故障，请检查");
+            StaticLog.info("节点注册服务器故障，请检查");
         }
     }
 }
