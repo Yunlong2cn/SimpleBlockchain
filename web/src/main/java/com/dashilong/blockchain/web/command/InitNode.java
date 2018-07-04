@@ -26,7 +26,8 @@ public class InitNode implements CommandLineRunner {
     ServerConfig serverConfig;
     @Override
     public void run(String... args) throws Exception {
-        String node = NetUtil.getLocalhostStr() + ":" + serverConfig.getPort();
+//        String node = NetUtil.getLocalhostStr() + ":" + serverConfig.getPort();
+        String node = blockChainConfig.getNode();
         try {
             String res = HttpUtil.get("http://"+ blockChainConfig.getNodeServer() +"/register?url=" + URLUtil.encode(node));
             StaticLog.info("节点注册成功");

@@ -11,4 +11,7 @@ import javax.validation.Valid;
 public class BlockChainConfig {
     @Value("${blockchain.node-server}")
     private String nodeServer;
+
+    @Value("${blockchain.node}")
+    private String node;
 }
